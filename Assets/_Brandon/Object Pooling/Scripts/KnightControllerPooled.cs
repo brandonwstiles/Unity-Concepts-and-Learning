@@ -25,6 +25,6 @@ public class KnightControllerPooled : MonoBehaviour
 
     private void PoolFireballs()
     {
-        ObjectPool.CreateObjectPool(fireballPrefab, 32);
+        ObjectPool.CreateObjectPool(this.gameObject ,fireballPrefab, 32);
     }
 }
