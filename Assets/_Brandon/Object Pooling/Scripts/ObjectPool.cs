@@ -6,27 +6,57 @@ namespace ObjectPooling
 {
     public static class ObjectPool
     {
-        public static List<GameObject> pooledObjects;
+        private static List<GameObject> pooledObjects;
+        private static Transform objectDefaultTransform;
 
+        //Create pool with parent
         public static void CreateObjectPool(GameObject parent, GameObject objectToPool, int amountToPool)
         {
             for (int i = 0; i < amountToPool; i++)
             {
-                pooledObjects.Add(GameObject.Instantiate(objectToPool, new Vector3(0, 0, 0),
+                pooledObjects.Add(GameObject.Instantiate(objectToPool, Vector3.zero,
                     Quaternion.identity.normalized, parent.transform));
 
                 SetObjectInactive(pooledObjects[i]);
             }
         }
 
-        public static void SetObjectInactive(GameObject gObject)
+        public static GameObject SelectDisabledObjectFromPool()
         {
-            gObject.transform.gameObject.SetActive(false);
+            foreach (var pooledObject in pooledObjects)
+            {
+                if (!pooledObject.activeSelf)
+                    return pooledObject;              
+            }
+            return null;
+            //Consider returning something more appropriate
         }
 
-        public static void SetAllObjectsActive()
+        public static void ReturnObjectToPool(GameObject pooledObject)
+        {
+            SetObjectInactive(pooledObject);
+            ResetObject(pooledObject);
+        }
+
+        private static void SetObjectInactive(GameObject pooledObject)
+        {
+            pooledObject.transform.gameObject.SetActive(false);
+        }
+
+        private static void SetAllObjectsActive()
         {
 
+        }
+
+        private static void ResetObject(GameObject pooledObject)
+        {
+
+        }
+
+        private static void SetObjectDefaultTransform(GameObject parent)
+        {
+            objectDefaultTransform = parent.transform;
+            //Consider different default position
         }
     }
 }
