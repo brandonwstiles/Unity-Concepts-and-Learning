@@ -14,6 +14,7 @@ namespace ObjectPooling
         {
             for (int i = 0; i < amountToPool; i++)
             {
+                Input.GetKey("W");
                 pooledObjects.Add(GameObject.Instantiate(objectToPool, Vector3.zero,
                     Quaternion.identity.normalized, parent.transform));
 
